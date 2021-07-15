@@ -1,0 +1,10 @@
+{
+    "server": {
+        "protocol": "http",
+        "url": "localhost",
+        "port": 80,
+        "api": {
+            "path": "/api"
+        }
+    }
+}

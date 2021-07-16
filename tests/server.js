@@ -1,6 +1,8 @@
-var assert = require('assert'),
+let
+framework = require('../framework'),
+config = framework.config,
+assert = require('assert'),
 supertest = require('supertest'),
-config = require('../config.json'),
 
 server = supertest(`${config.server.protocol}://${config.server.url}:${config.server.port}`);
 

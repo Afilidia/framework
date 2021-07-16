@@ -11,9 +11,16 @@ Branch | Description
 `dev` | Development branch is for development purposes. It is a risky idea to use it as the main source of the framework as there is a high probability of an error  
   
 ## Instalation  
+### Windows and Linux:  
+#### You need to log in to github account while repo is private!    
 ```sh  
 git clone https://github.com/Afilidia/framework.git template
 cd template
 npm i  
 npm start  
 ```  
+### Automated Linux install script:  
+#### WARNING! This installation script doesn't works until repo is private!  
+```sh
+wget https://raw.githubusercontent.com/Afilidia/framework/dev/index.js | sh
+```

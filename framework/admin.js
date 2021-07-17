@@ -15,7 +15,7 @@ admin = {
             if(!onlyCalc) results.forEach(result => {
                 resStr += `$(fg-cyan)Line: ${result[0]}\n$(fg-white)${result[1]}\n`;
             });
-            resStr += `$(fg-cyan)Total lines: ${results.length}`;
+            resStr += `$(fg-cyan)Total results: ${(logFile.match(new RegExp(searchString, 'g')) || []).length}`;
             log(0, resStr, false, false, false)
         });
     }

@@ -1,3 +1,5 @@
+const framework = require('../framework');
+
 let log = require('./logger'),
 data = require('../data'),
 init = (commands) => {
@@ -39,15 +41,15 @@ init = (commands) => {
         rl.pause();
         data.addLogEntry(`Console executing command: ${line}`)
         let command = line.trim().match(/(?:[^\s"]+|"[^"]*")+/g);//(/([^"]+)|("(?:[^"\\]|\\.)+")/g);
-        log(4, command);
-        if(!command||command.length<1) return;
-        command.forEach(commandArg => {
-            commandArg = commandArg.replace(/^\"|\"$/g, '');
-        });
+        log(8, command);
+        if(!command||command.length<1) return rl.resume();
+        for (let argI = 0; argI < command.length; argI++) {
+            command[argI] = command[argI].replace(/(^\"|\"$)/g, '');
+        }
         let i = 0;
         let commandFinder = (fullDefinition) => {
             i++;
-            log(4, [command[i-1], command[i], fullDefinition, i])
+            log(8, [command[i-1], command[i], fullDefinition, i])
             if(!fullDefinition||i>command.length) return false;
             else if(fullDefinition&&fullDefinition[command[i]]) return commandFinder(fullDefinition[command[i]]);
             else return [fullDefinition, i];

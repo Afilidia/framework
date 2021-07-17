@@ -7,7 +7,7 @@ list = {
     log: {
         search: {exec: (args)=>{framework.admin.searchLogs(args.join(" "))}, desc: "Search entries in log with text"},
         calculate: {exec: (args)=>{framework.admin.searchLogs(args.join(" "), true)}, desc: "Calculate entries in log with text"},
-        exec: (args)=>{framework.log(0, list.help.exec(["log"]))}
+        exec: (args)=>{framework.log(0, list.help.exec(["log"]))}, desc: "Log managment command"
     },
     echo: {exec: (args)=>{framework.log(0,args.join(" "))}, desc: "Print text to CLI"},
     help: {exec: (args)=>{
@@ -20,24 +20,24 @@ list = {
                 Object.keys(fullCommand).forEach(commandKey => {
                     let commandValue = fullCommand[commandKey];
                     if(commandKey != "exec" && commandKey != "desc") {
-                        table.cell('Argument', `$(fg-blue)${commandKey}$(gb-reset)`);
-                        table.cell('Description', `$(gb-reset)${commandValue.desc||""}`);
+                        table.cell('Argument', `${commandKey}`);
+                        table.cell('Description', `$(gb-reset)${commandValue.desc||""}$(fg-cyan)`);
                         table.newRow();
                     }
                 });
             }
-            framework.log(0, `$(fg-blue)${args.join(" ")}$(gb-reset)${fullCommand.desc ? `\t-\t${fullCommand.desc}`:""}\n${table.toString()}`);
+            framework.log(0, `$(fg-cyan)${args.join(" ")}$(gb-reset)${fullCommand.desc ? `\t-\t${fullCommand.desc}`:""}\n$(fg-cyan)${table.toString()}`);
         } else {
             let table = new Table();
             Object.keys(list).forEach(commandKey => {
                 let commandValue = list[commandKey];
-                table.cell('Command', `$(fg-blue)${commandKey}$(gb-reset)`);
-                table.cell('Description', `$(gb-reset)${commandValue.desc||""}`);
+                table.cell('Command', `${commandKey}`);
+                table.cell('Description', `$(gb-reset)${commandValue.desc||""}$(fg-cyan)`);
                 table.newRow();
             });
-            framework.log(0, `$(fg-blue)Hello Admin! $(fg-cyan)Here is your abilities list:$(gb-reset)\n${table.toString()}`);
+            framework.log(0, `$(fg-cyan)Hello Admin! $(fg-cyan)Here is your abilities list:$(gb-reset)\n$(fg-cyan)${table.toString()}`);
         }
-    }, desc: "This command gives you a helping hand with command list and helpful informations"},
+    }, desc: "Commands list"},
     run: {exec: (args=>{
         fs.readFile(args[0],(err, script)=>{
             if(err) return framework.log(0,`$(fg-red)No such file`)
@@ -52,6 +52,12 @@ list = {
             runnextline();
         });
     }), desc: "Executes Raptor script (file.rs)"},
+    uptime: {exec: (args)=>{
+        framework.log(0, "$(uptime)");
+    }, desc: "Shows you an uptime"},
+    clear: {exec: (args)=>{
+        console.clear();
+    }, desc: "Clears terminal"},
     diagnostic: {exec: (args)=>{
         process.report.writeReport(args.length?args.join(" "):"diag.json");
     }, desc: "Creates file with diagnostic data (diagnostic file.json)"},

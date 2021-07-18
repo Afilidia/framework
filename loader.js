@@ -1,6 +1,6 @@
 let
 framework = require('./framework'),
-config = framework.config;
+config = framework.config();
 framework.log(0, framework.logo, false, false, false);
 let line = ()=>{}
 let commands = require('./commands');

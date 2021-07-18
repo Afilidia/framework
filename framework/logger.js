@@ -12,7 +12,7 @@ os = require('os');
 let log = (level, message, foreground, background, addEntry) => {
     message = message || "";
     level = parseInt(level)==level ? level : 3;
-    let loggerLevel = frameworkData.config.framework.logger.level||1,
+    let loggerLevel = frameworkData.config().framework.logger.level||1,
     response = {
         loggerLevel,
         level,
@@ -44,7 +44,7 @@ let log = (level, message, foreground, background, addEntry) => {
         else if(typeof value == "string") return `$(fg-green)${value}$(gb-reset)`;
         else if(typeof value == "number") return `$(fg-cyan)${value}$(gb-reset)`;
         else return value;
-    }).replace(/"/g, '');//.replace(`"$(fg-red)$(gb-bright)()=>{}$(gb-reset)"`, `$(fg-red)$(gb-bright)()=>{}$(gb-reset)`);
+    }).replace(/"/g, '').replace(/(?<!\\)\\(?!\\)/g, '"').replace(/(\\\\)/g, '"');//.replace(`"$(fg-red)$(gb-bright)()=>{}$(gb-reset)"`, `$(fg-red)$(gb-bright)()=>{}$(gb-reset)`);
     for (let colorID of Object.keys(frameworkData.colors)) {
         let color = frameworkData.colors[colorID];
         if(typeof color == "string") for(let i = 0; i < message.length; i++) message = message.replace(`$(gb-${colorID})`, color);
@@ -61,7 +61,7 @@ let log = (level, message, foreground, background, addEntry) => {
     .replace(/\$\(uptime\)/g, secondsToTimeString(process.uptime()))
     .replace(/\$\(platform\)/g, os.platform())
     .replace(/\$\(ram\)/g, `${Math.round(process.memoryUsage().heapUsed/10000)/100}MB / ${Math.round(process.memoryUsage().heapTotal/10000)/100}MB ( ${Math.round(process.memoryUsage().heapUsed/process.memoryUsage().heapTotal*10000)/100}% ) (+${Math.round(process.memoryUsage().external/10000)/100}MB)`);
-    response.output = `${frameworkData.colors.reset}${response.date} | ${response.level} | ${frameworkData.colors.bright}${frameworkData.colors.fg.cyan}${frameworkData.config.framework.title}${frameworkData.colors.reset}> ${response.colors.fg}${response.colors.bg||""}${message}${frameworkData.colors.reset}­`;
+    response.output = `${frameworkData.colors.reset}${response.date} | ${response.level} | ${frameworkData.colors.bright}${frameworkData.colors.fg.cyan}${frameworkData.config().framework.title}${frameworkData.colors.reset}> ${response.colors.fg}${response.colors.bg||""}${message}${frameworkData.colors.reset}­`;
     
     console.log(response.output.replace('­', ''));
     if(response.addEntry) frameworkData.addLogEntry(response.output);

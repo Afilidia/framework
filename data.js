@@ -1,7 +1,7 @@
 let fs = require('fs');
 module.exports = {
     colors: require('./framework/colors'),
-    config: require('./config.json'),
+    config: ()=>{return require('./config.json')},
     addLogEntry: (text) => {
         fs.appendFile(`./main.log`, `\n${text}`, 'utf8', (err)=>{});
     },

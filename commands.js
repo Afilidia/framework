@@ -7,7 +7,24 @@ list = {
     log: {
         search: {exec: (args)=>{framework.admin.searchLogs(args.join(" "))}, desc: "Search entries in log with text"},
         calculate: {exec: (args)=>{framework.admin.searchLogs(args.join(" "), true)}, desc: "Calculate entries in log with text"},
-        exec: (args)=>{framework.log(0, list.help.exec(["log"]))}, desc: "Log managment command"
+        exec: (args)=>{list.help.exec(["log"])}, desc: "Log managment command"
+    },
+    config: {
+        update: {exec: (args)=>{
+            try {
+                let newData = JSON.parse(args[0]);
+                framework.log(0, `Config before update: ${JSON.stringify(framework.config())}`);
+                framework.admin.updateConfig(newData);
+                framework.log(0, `Config after update: ${JSON.stringify(framework.config())}`);
+            } catch (e) {framework.log(0, "Error when parsing data: $(fg-red)" + e + "$(gb-reset) | Aborting config update.")};
+        }, desc: "Update config with JSON data"},
+        get: {exec: (args)=>{
+            let now = framework.config();
+            let getProperty = (i) => {i=parseInt(i)==i?i+1:0; if(i<args.length) {now = now[args[i]]||{}; return getProperty(i);} else return now;};
+            now = getProperty();
+            framework.log(0, JSON.stringify(now)=="{}"?"Property not exist or is empty":now);
+        }, desc: "Get config property"},
+        exec: (args)=>{list.help.exec(["config"])}, desc: "Config managment command"
     },
     echo: {exec: (args)=>{framework.log(0,args.join(" "))}, desc: "Print text to CLI"},
     help: {exec: (args)=>{
@@ -60,13 +77,21 @@ list = {
     }, desc: "Clears terminal"},
     diagnostic: {exec: (args)=>{
         process.report.writeReport(args.length?args.join(" "):"diag.json");
-    }, desc: "Creates file with diagnostic data (diagnostic file.json)"},
+    }, desc: "Creates file with diagnostic data"},
     restart: {exec: (args)=>{
         process.exit();
     }, desc: "Restarts worker"},
     stop: {exec: (args)=>{
         process.exit(2);
-    }, desc: "Sends exit signal to manager"}
+    }, desc: "Sends exit signal to manager"},
+    eval: {exec: (args)=>{
+        try {
+            framework.log(0, eval(args.join(" ")));
+        } catch(err) {
+            framework.log(0, `Error in evaluate execution: $(fg-red)${err}$(fg-white)\n${err.stack}`);
+        }
+    }, desc: "Evaluates JS code"},
+    "200iq command": {exec: (args)=>{framework.log(0,"You have 200iq")}, desc: "u can run this cmd = u have 200iq"}
 },
 update = (linef) => {
     line = linef;

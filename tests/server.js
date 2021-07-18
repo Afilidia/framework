@@ -1,6 +1,6 @@
 let
 framework = require('../framework'),
-config = framework.config,
+config = framework.config(),
 assert = require('assert'),
 supertest = require('supertest'),
 

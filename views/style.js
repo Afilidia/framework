@@ -6,5 +6,6 @@ style = framework.css.parse(`body {
 a {
     color:#00B7FF
 }`);
+
 style.body.backgroundColor = "#ccc";
 module.exports = framework.css.stringify(style);

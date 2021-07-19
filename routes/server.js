@@ -2,15 +2,16 @@ let express = require('express'),
 router = express.Router(),
 framework = require('../framework');
 
-let cache = {style: require('../views/style'), example: require('../views/example'), example2: require('../views/example2')};
+let cache = {style: require('../views/style'), example: require('../views/example'), example2: require('../views/example2'), index: require('../views/index')};
 let updateCache = async () => {
   cache.style = require('../views/style');
   cache.example = require('../views/example');
   cache.example2 = require('../views/example2');
+  cache.index = require('../views/index');
 }
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('renderer', { site: cache.index });
 });
 router.get('/style.css', function(req, res, next) {
   res.setHeader("Content-Type", "text/css; charset=UTF-8");

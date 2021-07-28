@@ -8,6 +8,7 @@ framework = {
     cli: require('./framework/cli'),
     languages: require('./framework/languages'),
     html: require('./framework/html'),
-    css: require('./framework/css')
+    css: require('./framework/css'),
+    hook: require('./framework/hook'),
 };
 module.exports = framework;

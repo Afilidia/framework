@@ -1,5 +1,10 @@
 let log = require('./logger');
 let css = {
+    /**
+     * ### CSS parser
+     * @param {string} stringifiedCSS Stringified CSS
+     * @returns Objected CSS
+     */
     parse: (stringifiedCSS) => {
         if (typeof stringifiedCSS !== 'string') return false;
         else if(!stringifiedCSS.includes("{")&&!stringifiedCSS.includes("}")) stringifiedCSS = `{${stringifiedCSS}}`;
@@ -20,6 +25,11 @@ let css = {
         });
         return objectedCSS[""]?objectedCSS[""]:objectedCSS;
     },
+    /**
+     * ### CSS stringifier
+     * @param {object} objectedCSS Objected CSS
+     * @returns {string} Stringified CSS
+     */
     stringify: (objectedCSS) => {
         if (typeof objectedCSS !== 'object') return false;
         let stringifiedCSS = "";

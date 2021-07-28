@@ -25,6 +25,26 @@ app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+let basicAuth = require('basic-auth');
+let auth = function(req, res, next){
+    let user = basicAuth(req);
+    if(user && user.name == framework.config().docs.user && user.pass == framework.config().docs.pass)
+        return next();
+    else{
+        res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+        return res.send(401);
+    }
+}
+
+app.use(function(req, res, next){
+    if(req.url.indexOf('docs') != -1){
+        return auth(req, res, next);
+    } else next();
+});
+app.use('/docs', express.static(path.join(__dirname, 'docs')));
+
+
 app.use(config.server.api.path, apiRouter);
 app.use('/', serverRouter);
 

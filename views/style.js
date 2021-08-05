@@ -9,3 +9,4 @@ a {
 
 style.body.backgroundColor = "#ccc";
 module.exports = framework.css.stringify(style);
+

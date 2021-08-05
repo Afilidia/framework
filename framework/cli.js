@@ -2,6 +2,10 @@ const framework = require('../framework');
 
 let log = require('./logger'),
 data = require('../data'),
+/**
+ * ### CLI initializator
+ * @param {object} commands Object with CLI commands
+ */
 init = (commands) => {
     commands = commands || {help: {exec: (args)=>{log(0, `$(fg-red)No commands config specified, please pass config by CLI init args`)}}};
     let rl = require('readline').createInterface({
@@ -37,6 +41,10 @@ init = (commands) => {
     rl.on('line', (line) => {
         this.line(line);
     });
+    /**
+     * ### Command executor
+     * @param {string} line Command line
+     */
     this.line = (line) => {
         rl.pause();
         data.addLogEntry(`Console executing command: ${line}`)

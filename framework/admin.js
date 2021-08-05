@@ -2,6 +2,11 @@ let log = require('./logger'),
 data = require('../data'),
 fs = require('fs'),
 admin = {
+    /**
+     * ### Search log for string
+     * @param {string} searchString String to search for
+     * @param {boolean} onlyCalc If true, only total result count is shown
+     */
     searchLogs: (searchString, onlyCalc) => {
         data.readLog((logFile)=>{
             let results = [];
@@ -19,6 +24,10 @@ admin = {
             log(0, resStr, false, false, false)
         });
     },
+    /**
+     * ### Update config properties
+     * @param {object} properties Object with properties and values to update in main config
+     */
     updateConfig: (properties) => {
         let before = require('../config.json');
         let update = (o, o2) => { 

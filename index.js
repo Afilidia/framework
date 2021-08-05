@@ -1,7 +1,7 @@
 let framework = require('./framework'),
 spawn = () => {
     framework.log(0, "Loading worker...");
-    let app = require("child_process").spawn('node', ['loader.js'], {
+    let app = require("child_process").spawn('node', ['loader.js', '--stacksize=10000'], {
         cwd: process.cwd(),
         detached : false,
         stdio: "inherit"

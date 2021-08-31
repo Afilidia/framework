@@ -23,6 +23,6 @@
     },
     "discord": {
         "webhook": "https://discord.com/api/webhooks/867383318009741312/HSwfrnYromB9Zhis-dxT32olUgSfloNEsIK5dbNlLFVDjrKJ520bcg96gdJ8dpfyWG12",
-        "enabled": true
+        "enabled": false
     }
 }

@@ -1,28 +1,39 @@
 let express = require('express'),
 router = express.Router(),
-framework = require('../framework');
+framework = require('../framework'),
+host = new framework.Host(router);
 
-let cache = {style: require('../views/style'), example: require('../views/example'), example2: require('../views/example2'), index: require('../views/index')};
+let cache = {style: require('../views/style'), styles: {buttons: require('../views/buttons')}, example: require('../views/example'), example2: require('../views/example2'), index: require('../views/index'), buttontest: require('../views/buttontest'), buttonmain: require('../views/buttonmain')};
 let updateCache = async () => {
   cache.style = require('../views/style');
+  cache.styles.buttons = require('../views/buttons');
   cache.example = require('../views/example');
   cache.example2 = require('../views/example2');
   cache.index = require('../views/index');
+  cache.buttontest = require('../views/buttontest');
+  cache.buttonmain = require('../views/buttonmain');
 }
 /* GET home page. */
-router.get('/', function(req, res, next) {
+host.customPage('/', false, ()=>true, "/", function(req, res, next) {
   res.render('renderer', { site: cache.index });
 });
-router.get('/style.css', function(req, res, next) {
-  res.setHeader("Content-Type", "text/css; charset=UTF-8");
-  res.render('renderer', { site: cache.style });
+host.customPage('/buttontest', false, ()=>true, "/", function(req, res, next) {
+  res.render('renderer', { site: cache.buttontest });
+});
+host.style('/style.css', cache.style, ()=>{
   updateCache();
 });
-router.get('/example', function(req, res, next) {
+host.script('/buttonmain.js', cache.buttonmain, ()=>{
+  updateCache();
+});
+host.style('/buttons.css', cache.styles.buttons, ()=>{
+  updateCache();
+});
+host.customPage('/example1', false, ()=>true, "/", function(req, res, next) {
   res.render('renderer', { site: cache.example });
   updateCache();
 });
-router.get('/example2', function(req, res, next) {
+host.customPage('/example2', false, ()=>true, "/", function(req, res, next) {
   res.render('renderer', { site: cache.example2, properties: {lang: req.query.lang} });
   updateCache();
 });

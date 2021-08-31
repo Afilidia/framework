@@ -10,5 +10,6 @@ framework = {
     html: require('./framework/html'),
     css: require('./framework/css'),
     hook: require('./framework/hook'),
+    Host: require('./framework/host')
 };
 module.exports = framework;

@@ -297,6 +297,75 @@ html = {
                     return chars();
                 }
             };
+
+            /**
+             * @method component
+             */
+            class WebManager {
+                constructor() {
+                    if (document.body.loadedWebManager) return document.body;
+
+                    /* Add built in methods */
+                    /**
+                     * ## CSS applyer
+                     * @param {object} properties CSS properties to apply (JS formatted ex. backgroundColor)
+                     * @returns Modified element
+                     */
+                    document.body.css = (properties) => {
+                        Object.keys(properties).forEach(key => {
+                            document.body.style[key] = properties[key];
+                        });
+                        return document.body;
+                    };
+
+                    document.body.loadedWebManager = true;
+                }
+
+                /**
+                 * ## HTML component (element) generator
+                 * 
+                 * @param {string} type HTML tag type
+                 * @param {object} properties HTML attributes
+                 * @param {?HTMLElement} parent Parent element
+                 * @returns Generated element
+                 */
+                component (type, properties, parent) {
+                    /* Generating HTML element with tag type [type](string) */
+                    let generated = document.createElement(type);
+                    
+                    /* Attaching element to parent if specified or to the body */
+                    (parent||document.body).appendChild(generated);
+                    
+                    /* Setting element attributes to [properties{key1:value1,key2:value2}] */
+                    Object.keys(properties).forEach(key => {
+                        generated.setAttribute(key, properties[key]);
+                    });
+
+                    /* Add built in methods */
+                    /**
+                     * ## CSS applyer
+                     * @param {object} properties CSS properties to apply (JS formatted ex. backgroundColor)
+                     * @returns Modified element
+                     */
+                    generated.css = (properties) => {
+                        Object.keys(properties).forEach(key => {
+                            generated.style[key] = properties[key];
+                        });
+
+                        return generated;
+                    }
+                    /**
+                     * ## Click handler with JS function
+                     * @param {function} code JS code to run on clicked
+                     */
+                    generated.click = (code) => {
+                        generated.setAttribute("onclick", code.toString().split("\n").splice(1).splice(0, 1).join("\n"));
+                    }
+                    
+                    /* Returning generated element for next modifications */
+                    return generated;
+                }
+            }
         })
         // , {
         //     compact: true,
@@ -321,7 +390,7 @@ html = {
         //     renameGlobals: false,
         //     renameProperties: false,
         //     renamePropertiesMode: 'safe',
-        //     reservedNames: ["^i","^interactives","^interactivesCore","^QueueManager","^Thread","^Combination","^animate","^generateCombinations"],
+        //     reservedNames: ["^i","^interactives","^interactivesCore","^QueueManager","^Thread","^Combination","^animate","^generateCombinations", "^WebManager", "^component", "^css", "^click"],
         //     reservedStrings: [],
         //     rotateStringArray: true,
         //     selfDefending: true,

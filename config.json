@@ -1,10 +1,28 @@
 {
+    "framework": {
+        "title//": "defines title showed in places like logs, admin panel, etc",
+        "title": "Raptor",
+        "logger": {
+            "level//": "defines how much logs to show",
+            "level": 7
+        }
+    },
     "server": {
         "protocol": "http",
         "url": "localhost",
+        "qualifiedURLs//": "Core anti-theft",
+        "qualifiedURLs": ["http://localhost"],
         "port": 80,
         "api": {
             "path": "/api"
         }
+    },
+    "docs": {
+        "user": "admin",
+        "pass": "admin"
+    },
+    "discord": {
+        "webhook": "https://discord.com/api/webhooks/867383318009741312/HSwfrnYromB9Zhis-dxT32olUgSfloNEsIK5dbNlLFVDjrKJ520bcg96gdJ8dpfyWG12",
+        "enabled": false
     }
 }

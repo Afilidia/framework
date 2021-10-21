@@ -1,6 +1,8 @@
-var chai = require('chai'),
+let
+framework = require('../framework'),
+config = framework.config(),
+chai = require('chai'),
 supertest = require('supertest'),
-config = require('../config.json'),
 
 server = supertest(`${config.server.protocol}://${config.server.url}:${config.server.port}${config.server.api.path}`);
 

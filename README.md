@@ -27,7 +27,7 @@ npm start
 ### Automated Linux install script  
 **WARNING! This installation script doesn't works until repo is private!**  
 ```sh
-wget https://raw.githubusercontent.com/Afilidia/framework/dev/index.js | sh
+wget https://raw.githubusercontent.com/Afilidia/framework/dev/linux-install.sh | sudo ./linux-install.sh
 ```  
   
 ## Logger binds  

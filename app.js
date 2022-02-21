@@ -37,10 +37,23 @@ let auth = function(req, res, next){
     }
 }
 
+let checkurl = (url, list, pos) => {
+    let pred = false
+  	list.forEach(l => {
+        if(url.indexOf(l)==pos) pred = true;
+    });
+    return pred;
+};
+
 app.use(function(req, res, next){
-    if(req.url.indexOf('docs') != -1){
-        return auth(req, res, next);
-    } else next();
+    res.setHeader("X-Powered-By", "Afilidia");
+
+    if(!(framework.config().server.developermode.domain && framework.config().server.developermode.domain == req.hostname) && framework.config().server.developermode.endpoint && req.url != framework.config().server.developermode.endpoint && !checkurl(req.url, [...fs.readdirSync("./public"), "api"], 1)) res.redirect(framework.config().server.developermode.endpoint);
+    else {
+        if(req.url.indexOf('docs') != -1){
+            return auth(req, res, next);
+        } else next();
+    }
 });
 app.use('/docs', express.static(path.join(__dirname, 'docs')));
 

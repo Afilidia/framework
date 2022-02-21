@@ -8,6 +8,13 @@
         }
     },
     "server": {
+        "developermode": {
+            "endpoint//": "Defines endpoint that user will be redirected to. Set this to false if you want to disable developer mode",
+            "endpoint": false,
+            "domain//": "Developers domain bypass",
+            "domain": "afilidia.com"
+        },
+
         "protocol": "http",
         "url": "localhost",
         "qualifiedURLs//": "Core anti-theft",
